@@ -7,10 +7,9 @@
 # This file is a part of the Armbian Rebuild and kernel Recompile script
 # https://github.com/ophub/amlogic-s9xxx-armbian
 #
-# Function: Executed at system initialization
-# Copyright (C) 2021 https://github.com/ophub/amlogic-s9xxx-armbian
-#
 # Dependent script: /usr/lib/armbian/armbian-firstrun
+# Function: Fix permissions and related settings(Executed at system initialization)
+# Copyright (C) 2021 https://github.com/ophub/amlogic-s9xxx-armbian
 #
 # Command: armbian-fix
 #============================================================================================================================
