@@ -26,4 +26,5 @@ sudo chmod 644 /usr/lib/sudo/sudoers.so
 sudo chmod 4755 /usr/lib/policykit-1/polkit-agent-helper-1
 sudo chmod 755 /etc/update-motd.d/*
 
-exit 0
+echo -e "armbian-fix: Loading finished."
+
