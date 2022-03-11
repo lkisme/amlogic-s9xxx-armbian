@@ -211,8 +211,8 @@ fi
 # Format emmc disk
 echo "Start create MBR and partittion"
 parted -s "${DEV_EMMC}" mklabel msdos 2>/dev/null
-parted -s "${DEV_EMMC}" mkpart primary fat32 $((BLANK1 * 1024 * 1024))b $(((BLANK1 + BOOT) * 1024 * 1024 - 1))b 2>/dev/null
-parted -s "${DEV_EMMC}" mkpart primary ext4 $(((BLANK1 + BOOT + BLANK2) * 1024 * 1024))b 100% 2>/dev/null
+parted -s "${DEV_EMMC}" mkpart primary fat32 $((BLANK1))M $((BLANK1 + BOOT - 1))M 2>/dev/null
+parted -s "${DEV_EMMC}" mkpart primary btrfs $((BLANK1 + BOOT + BLANK2))M 100% 2>/dev/null
 sync
 
 # Write the uboot
@@ -265,7 +265,7 @@ cat >${DIR_INSTALL}/uEnv.txt <<EOF
 LINUX=/zImage
 INITRD=/uInitrd
 FDT=/dtb/amlogic/${FDTFILE}
-APPEND=root=UUID=${ROOTFS_UUID} console=ttyAML0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes net.ifnames=0 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1
+APPEND=root=UUID=${ROOTFS_UUID} rootfstype=btrfs rootflags=compress=zstd:6 console=ttyAML0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes net.ifnames=0 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1
 EOF
 
 rm ${DIR_INSTALL}/s9*
@@ -303,10 +303,10 @@ if grep -q ${PART_ROOT} /proc/mounts; then
 fi
 
 echo "Formatting ROOTFS partition..."
-mkfs.ext4 -F -q -U ${ROOTFS_UUID} -L "ROOTFS_EMMC" ${PART_ROOT}
+mkfs.btrfs -f -U ${ROOTFS_UUID} -L "ROOTFS_EMMC" -m single ${PART_ROOT}
 
 echo "Start copy ROOTFS_EMMC partition data..."
-mount -t ext4 ${PART_ROOT} ${DIR_INSTALL}
+mount -t btrfs -o compress=zstd:6 ${PART_ROOT} ${DIR_INSTALL}
 [ "$?" -ne "0" ] && echo "Failed to mount ROOTFS partition" && exit 1
 
 cd /
@@ -355,7 +355,7 @@ sync
 echo "Generate the new fstab file."
 rm -f ${DIR_INSTALL}/etc/fstab 2>/dev/null && sync
 cat >${DIR_INSTALL}/etc/fstab <<EOF
-UUID=${ROOTFS_UUID}  /               ext4            defaults,noatime,errors=remount-ro     0 1
+UUID=${ROOTFS_UUID}  /               btrfs           defaults,noatime,errors=remount-ro     0 1
 LABEL=BOOT_EMMC      /boot           vfat            defaults                               0 2
 tmpfs                /tmp            tmpfs           defaults,nosuid                        0 0
 
