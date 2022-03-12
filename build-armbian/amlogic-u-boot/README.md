@@ -19,6 +19,7 @@ These duplications are automated in the repository's packaging and install/updat
 <tr><td>23</td><td>Tanix-TX92</td><td>s912</td><td>meson-gxm-octopus-planet.dtb</td><td>u-boot-zyxq.bin</td><td>NA</td><td>NA</td><td>3GB DDR4 32GB eMMC,1.5GHz,5G WIFI,1Gb Nic</td></tr>
 <tr><td>24</td><td>VORKE-Z6-Plus</td><td>s912</td><td>meson-gxm-octopus-planet.dtb</td><td>u-boot-zyxq.bin</td><td>NA</td><td>NA</td><td>3GB DDR3 32GB eMMC5.0,1.5Ghz,TF CARD Support 1~32GB,1Gb Nic</td></tr>
 <tr><td>25</td><td>T95Z Plus</td><td>s912</td><td>meson-gxm-t95z-plus.dtb</td><td>u-boot-s905x-s912.bin</td><td>NA</td><td>NA</td><td>3G+32G,Octa-Core,2.4/5.8G Dual-Band WiFi,1Gb Nic 64Bit BT4.0</td></tr>
+<tr><td>26</td><td>MECOOL M8S Pro L</td><td>s912</td><td>meson-gxm-q201.dtb</td><td>u-boot-s905x-s912.bin</td><td>NA</td><td>NA</td><td>2G RAM,3G RAM,16G ROM,32G ROM,100M Nic</td></tr>
 
 <tr><td>31</td><td>X96 Max 4GB</td><td>s905x2</td><td>meson-g12a-x96-max.dtb</td><td>u-boot-x96max.bin</td><td>x96max-u-boot.bin.sd.bin</td><td>NA</td><td>4C@1908Mhz,4GB Mem,1Gb Nic</td></tr>
 <tr><td>32</td><td>X96 Max 2GB</td><td>s905x2</td><td>meson-g12a-x96-max-rmii.dtb</td><td>u-boot-x96max.bin</td><td>x96max-u-boot.bin.sd.bin</td><td>NA</td><td>4C@1908Mhz,2GB Mem,100M Nic</td></tr>
