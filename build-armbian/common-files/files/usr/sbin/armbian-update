@@ -1,5 +1,5 @@
 #!/bin/bash
-#============================================================================================================================
+#===================================================================================================
 # This file is licensed under the terms of the GNU General Public
 # License version 2. This program is licensed "as is" without any
 # warranty of any kind, whether express or implied.
@@ -13,24 +13,17 @@
 #
 # Kernel download server: https://github.com/ophub/kernel/tree/main/pub
 #
-# When the kernel version is upgraded from 5.10 or lower to 5.10 or higher, need to install mainline u-boot.
-# When there is no mainline u-boot file in related directory, the script will auto try to download the file from the server:
-# UBOOT_OVERLOAD: https://github.com/ophub/amlogic-s9xxx-armbian/tree/main/build-armbian/amlogic-u-boot/overload
-# MAINLINE_UBOOT: https://github.com/ophub/amlogic-s9xxx-armbian/tree/main/build-armbian/amlogic-u-boot/bootloader
-#
 # Command: armbian-update
 # Command optional parameters: armbian-update <kernel_version> <version_branch> <mainline_u-boot>
 # The kernel above version 5.10 needs to install mainline u-boot
 # The mainline u-boot is installed by default: armbian-update
 # Don't write mainline u-boot command: armbian-update 5.4.170 stable no
-#============================================================================================================================
+#===================================================================================================
 
 # Set default value
 tmp_path="${PWD}"
 kernel_repo="https://api.github.com/repos/ophub/kernel/contents/pub"
-depends_repo="https://raw.githubusercontent.com/ophub/amlogic-s9xxx-armbian/main/build-armbian/amlogic-u-boot"
 ophub_release_file="/etc/ophub-release"
-old_ophub_release_file="/etc/armbian-aml-release"
 github_api_kernel_files="${tmp_path}/github_api_kernel_files"
 
 echo -e "Ready to update, please wait..."
@@ -42,7 +35,6 @@ error_msg() {
 }
 
 # Check release file
-[ -f "${old_ophub_release_file}" ] && mv -f "${old_ophub_release_file}" "${ophub_release_file}" 2>/dev/null && sync
 if [ -f "${ophub_release_file}" ]; then
     source "${ophub_release_file}" 2>/dev/null
     UBOOT_OVERLOAD="${UBOOT_OVERLOAD}"
@@ -242,41 +234,6 @@ fi
 if [ "${V510}" -lt "${K510}" ]; then
     echo -e "Update to kernel 5.10 or higher"
 
-    # Check ${UBOOT_OVERLOAD}
-    if [[ -n "${UBOOT_OVERLOAD}" ]]; then
-        if [[ ! -s "/boot/${UBOOT_OVERLOAD}" ]]; then
-            echo -e "Try to download the ${UBOOT_OVERLOAD} file from the server."
-            GITHUB_UBOOT_OVERLOAD="${depends_repo}/overload/${UBOOT_OVERLOAD}"
-            #echo -e "UBOOT_OVERLOAD: ${GITHUB_UBOOT_OVERLOAD}"
-            wget -c "${GITHUB_UBOOT_OVERLOAD}" -O "/boot/${UBOOT_OVERLOAD}" >/dev/null 2>&1 && sync
-            if [[ "$?" -eq "0" && -s "/boot/${UBOOT_OVERLOAD}" ]]; then
-                echo -e "The ${UBOOT_OVERLOAD} file download is complete."
-            else
-                error_msg "The ${UBOOT_OVERLOAD} file download failed. please try again."
-            fi
-        else
-            echo -e "The ${UBOOT_OVERLOAD} file has been found."
-        fi
-    else
-        error_msg "The 5.10 kernel cannot be used without UBOOT_OVERLOAD."
-    fi
-
-    # Check ${MAINLINE_UBOOT}
-    if [[ -n "${MAINLINE_UBOOT}" && "${auto_mainline_uboot}" == "yes" ]]; then
-        if [[ ! -s "${MAINLINE_UBOOT}" ]]; then
-            echo -e "Try to download the MAINLINE_UBOOT file from the server."
-            GITHUB_MAINLINE_UBOOT="${depends_repo}/bootloader/${MAINLINE_UBOOT}"
-            #echo -e "MAINLINE_UBOOT: ${GITHUB_MAINLINE_UBOOT}"
-            [ -d "/usr/lib/u-boot" ] || mkdir -p /usr/lib/u-boot
-            wget -c "${GITHUB_MAINLINE_UBOOT}" -O "/usr/lib/u-boot/${MAINLINE_UBOOT}" >/dev/null 2>&1 && sync
-            if [[ "$?" -eq "0" && -s "${MAINLINE_UBOOT}" ]]; then
-                echo -e "The MAINLINE_UBOOT file download is complete."
-            else
-                error_msg "The MAINLINE_UBOOT file download failed. please try again."
-            fi
-        fi
-    fi
-
     # Copy u-boot.ext and u-boot.emmc
     if [ "${K510}" -eq "1" ]; then
         if [ -f "/boot/${UBOOT_OVERLOAD}" ]; then
@@ -289,14 +246,14 @@ if [ "${V510}" -lt "${K510}" ]; then
     fi
 
     # Write bootloader
-    if [[ -n "${MAINLINE_UBOOT}" && -f "/usr/lib/u-boot/${MAINLINE_UBOOT}" && "${auto_mainline_uboot}" == "yes" ]]; then
+    if [[ -n "${MAINLINE_UBOOT}" && -f "${MAINLINE_UBOOT}" && "${auto_mainline_uboot}" == "yes" ]]; then
         echo -e "Write Mainline bootloader: [ ${MAINLINE_UBOOT} ]"
-        dd if="/usr/lib/u-boot/${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
-        dd if="/usr/lib/u-boot/${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
-    elif [[ -n "${ANDROID_UBOOT}" && -f "/usr/lib/u-boot/${ANDROID_UBOOT}" ]]; then
+        dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
+        dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
+    elif [[ -n "${ANDROID_UBOOT}" && -f "${ANDROID_UBOOT}" ]]; then
         echo -e "Write Android bootloader: [ ${ANDROID_UBOOT} ]"
-        dd if="/usr/lib/u-boot/${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
-        dd if="/usr/lib/u-boot/${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
+        dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
+        dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
     fi
 
 fi
