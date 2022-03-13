@@ -42,8 +42,8 @@ These duplications are automated in the repository's packaging and install/updat
 <tr><td>506</td><td>H96 Max X3 (OverClock)</td><td>s905x3</td><td>meson-sm1-h96-max-x3-oc.dtb</td><td>u-boot-x96maxplus.bin</td><td>h96maxx3-u-boot.bin.sd.bin</td><td>NA</td><td>4C@2208Mhz,4GB Mem,1Gb Nic,Wifi</td></tr>
 <tr><td>507</td><td>Ugoos X3</td><td>s905x3</td><td>meson-sm1-ugoos-x3.dtb</td><td>u-boot-ugoos-x3.bin</td><td>NA</td><td>NA</td><td>4C@2100Mhz,2(Cube)/4(Pro,Plus)GB Mem,1Gb Nic,Wifi</td></tr>
 <tr><td>508</td><td>Ugoos X3 (OverClock)</td><td>s905x3</td><td>meson-sm1-ugoos-x3.dtb</td><td>u-boot-ugoos-x3.bin</td><td>NA</td><td>NA</td><td>4C@2208Mhz,2(Cube)/4(Pro,Plus)GB Mem,1Gb Nic,Wifi</td></tr>
-<tr><td>509</td><td>TX3</td><td>s905x3</td><td>meson-sm1-tx3.dtb</td><td>u-boot-x96maxplus.bin</td><td>x96maxplus-u-boot.bin.sd.bin</td><td>NA</td><td>4C@2100Mhz,4GB Mem,1Gb Nic,Wifi</td></tr>
-<tr><td>510</td><td>TX3 (OverClock)</td><td>s905x3</td><td>meson-sm1-tx3-oc.dtb</td><td>u-boot-x96maxplus.bin</td><td>x96maxplus-u-boot.bin.sd.bin</td><td>NA</td><td>4C@2208Mhz,4GB Mem,1Gb Nic,Wifi</td></tr>
+<tr><td>509</td><td>TX3</td><td>s905x3</td><td>meson-sm1-tx3.dtb</td><td>u-boot-x96maxplus.bin</td><td>x96maxplus-u-boot.bin.sd.bin</td><td>NA</td><td>4C@2100Mhz,4GB Mem,1Gb Nic,Bluetooth,Wifi</td></tr>
+<tr><td>510</td><td>TX3 (OverClock)</td><td>s905x3</td><td>meson-sm1-tx3-oc.dtb</td><td>u-boot-x96maxplus.bin</td><td>x96maxplus-u-boot.bin.sd.bin</td><td>NA</td><td>4C@2208Mhz,4GB Mem,1Gb Nic,Bluetooth,Wifi</td></tr>
 <tr><td>511</td><td>X96 Air 1Gb</td><td>s905x3</td><td>meson-sm1-x96-air-gbit.dtb</td><td>u-boot-x96maxplus.bin</td><td>NA</td><td>NA</td><td>4C@2100Mhz,2GB Mem,1Gb Nic,Wifi</td></tr>
 <tr><td>512</td><td>X96 Air 100Mb</td><td>s905x3</td><td>meson-sm1-x96-air.dtb</td><td>u-boot-x96maxplus.bin</td><td>NA</td><td>NA</td><td>4C@2100Mhz,2GB Mem,1Gb Nic,Wifi</td></tr>
 <tr><td>513</td><td>A95XF3 Air 1Gb</td><td>s905x3</td><td>meson-sm1-a95xf3-air-gbit.dtb</td><td>u-boot-x96maxplus.bin</td><td>NA</td><td>NA</td><td>4C@2100Mhz,2GB Mem,1Gb Nic,Wifi</td></tr>
